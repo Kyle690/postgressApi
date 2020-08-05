@@ -5,9 +5,10 @@
   "scripts": {
     "pre-start": "babel ./src --out-dir build",
     "start": "node ./src/bin/www",
-    "startdev": "nodemon --exec babel-node ./src/bin/www",
+    "dev": "nodemon --exec babel-node ./src/bin/www",
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha -r @babel/register",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "runQuery": "babel-node ./src/utils/runQuery.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -17,7 +18,8 @@
     "express": "~4.16.1",
     "http": "0.0.1-security",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "pg": "^8.3.0"
   },
   "lint": "./node_modules/.bin/eslint ./src",
   "prettier": "prettier --write '**/*.{js,json}' '!node_modules/**'",
