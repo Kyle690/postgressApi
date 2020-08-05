@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "pre-start": "babel ./src --out-dir build",
+    "prestart": "babel ./src --out-dir build",
     "start": "node ./src/bin/www",
     "dev": "nodemon --exec babel-node ./src/bin/www",
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 10000 -r @babel/register",
