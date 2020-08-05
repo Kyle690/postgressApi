@@ -26,13 +26,14 @@ describe('Messages',()=>{
       .end((err,res)=>{
         expect(res.status).to.equal(200);
         expect(res.body.messages).to.be.instanceOf(Array);
-        res.body.messages.forEach(m=>{
+        res.body.messages.forEach(m => {
           expect(m).to.have.property('id');
-          expect(m).to.have.property('name',data.name);
-          expect(m).to.have.property('message',`SAYS: ${data.message}`);
-        })
+          expect(m).to.have.property('name', data.name);
+          expect(m).to.have.property('message', `SAYS: ${data.message}`);
+        });
+        done();
       });
-    done();
+
   })
 
 
