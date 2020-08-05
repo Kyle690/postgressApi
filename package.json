@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prestart": "babel ./src --out-dir build",
-    "start": "node ./src/bin/www",
+    "start": "node ./build/bin/www",
     "dev": "nodemon --exec babel-node ./src/bin/www",
     "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha --timeout 10000 -r @babel/register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
