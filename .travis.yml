@@ -1,36 +1,38 @@
 language: node_js
 env:
-  global:
-    -CC_TEST_REPORTER_ID=827260dd94d345347b9034fc855b62c0a9572ff54a75762eb47b1afbd159f500
+  global: "-CC_TEST_REPORTER_ID=827260dd94d345347b9034fc855b62c0a9572ff54a75762eb47b1afbd159f500"
 matrix:
   include:
-    - node_js: '12'
+  - node_js: '12'
 cache:
-  directories: [node_modules]
-install:
-  npm install
+  directories:
+  - node_modules
+install: npm install
 after_success: npm run coverage
-
 services:
-  - postgresql
+- postgresql
 addons:
-  postgresql: "10"
+  postgresql: '10'
   apt:
     packages:
-      - postgresql-10
-      - postgresql-client-10
+    - postgresql-10
+    - postgresql-client-10
 before_install:
-  - sudo cp /etc/postgresql/{9.6,10}/main/pg_hba.conf
-  - sudo /etc/init.d/postgresql restart
-
-
+- sudo cp /etc/postgresql/{9.6,10}/main/pg_hba.conf
+- sudo /etc/init.d/postgresql restart
 before_script:
-  - psql -c 'create database testdb;' -U postgres
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
+- psql -c 'create database testdb;' -U postgres
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
 script:
-  - npm run test
+- npm run test
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESUL
-
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESUL"
+deploy:
+  provider: heroku
+  app:
+    master: postgresql-express-api
+  api_key:
+    secure: WUmXQnDTtRyHR+xDRLpGFQrJ3Y+Mzv2tOR8hP/tkFDNLr4suRh+aqVzJaxs98bTuRL2prZqn6NgnbW6TfJdRxDuGzOXXr+OX7yIGXcvgK4Loi+TuRf47i9zaabsfJEgcqk6R/WsjylEugNhjUycxg/C5GAYK8YrjrEpfK20Vj19Y3T1L+XTMeieqL4hQE91ss/NlT6pmResbO9Qd0gBK0PgtvNG9QLRCWWqQ76cdyVO+o5jx18IuyKRfpYsSSTgHUnCJ2YL9VtzIv+33eh8EEVIJWx/jjr8zRC9FSZ5KbAZSSF4qeem5Ascmlx/DVzVdVNRoj/GOtnnN5QvjIPGV9FbRDFhFYjW1RZ87xRmjpB2SSiZ5rDlTervLXdBBpj3QEQEcbS6OV0zZYstB5l/jOfBlYw83BvVc+aGpIvCSQmh4J3UU40Kubv71EHVo8Bp8McAY0zJMve6S29bAffLaMVVkj7n2ag17KNOHc8skH33uWeS/JzvRja1hwnVCjRFwxYkh559J++fDt7iM0K8/1uLxe8ZAxjuUVDiDI12h6DM2ii1eUI4l6t6Xak81OoFUDWgX4Vw3jbDcVTiJixmHmToxCrtUKGF++ewgPHuBdCu6JjJXLwD4RsJJ3jwIrqKFY9XmXdVhXDBd/U3VkIvMSvUQkThABOGTtW2FrhZYNvM=
