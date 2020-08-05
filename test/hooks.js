@@ -7,6 +7,6 @@ before(async ()=>{
 
 
 after(async ()=>{
-  //await dropTables();
+  await dropTables();
 })
 
